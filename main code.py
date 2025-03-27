@@ -13,7 +13,7 @@ app = Flask(__name__)
 def fetch_google_ads_data(client, customer_id):
     query = """
     SELECT campaign.id, campaign.name, metrics.clicks, 
-           metrics.impressions, metrics.average_cpc, 
+           metrics.impressions, metrics.average_cpc,
            metrics.conversions, metrics.cost_micros
     FROM campaign
     WHERE segments.date DURING LAST_30_DAYS
@@ -21,7 +21,7 @@ def fetch_google_ads_data(client, customer_id):
     response = client.service.google_ads.search(customer_id=customer_id, query=query)
     return [
         {"campaign_id": row.campaign.id, "clicks": row.metrics.clicks, "cost": row.metrics.cost_micros / 1_000_000}
-        for row in response
+        for row in respones
     ]
 
 # Step 2: Store Data in BigQuery
@@ -62,3 +62,4 @@ def recommend():
 
 if __name__ == "__main__":
     app.run(debug=True)
+    
